@@ -1,0 +1,10 @@
+\set COMP_KEYWORD_CASE upper
+\set HISTCONTROL ignoredups
+\pset null ¤
+\pset linestyle unicode
+\pset border 2
+\set VERBOSITY verbose
+\set QUIET 1
+\timing
+\set PROMPT1 '%[%033[1;31;40m%]%M%[%033[1;33;40m%]@%/(%n)%R%[%033[0m%]%# '
+\x auto
