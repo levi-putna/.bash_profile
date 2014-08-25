@@ -1,0 +1,109 @@
+[user]
+	name = Levi Putna
+	email = levi.putna@gmail.com
+
+[color]
+	ui = true
+
+[mergetool]
+	keepBackup = true
+	prompt = false
+
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustexitcode = true
+
+[merge]
+	tool = Kaleidoscope
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[difftool]
+	prompt = false
+
+[diff]
+	tool = Kaleidoscope
+
+[alias]
+	#######Shorten stuff
+	co = checkout
+	br = branch
+	st = status
+	stat = status
+	
+	#######Do some cool stuff
+	#Typo
+	amend = commit --amend
+	ammend = amend
+	ss = status -sb -uno
+	ssu = status -sb -unormal
+
+	#Sort refs perty like¬
+	sortrefs = for-each-ref --sort='-committerdate'
+	sortrefsp = for-each-ref --sort='-committerdate' --format='%(refname:short)  (%(authordate))'
+
+	#What needs to be cleaned up?
+	gerritcleanup = "!for i in $( git for-each-ref --format='%(refname)' refs/heads/OZLAU* ); do echo \"branch: $i\"; git --no-pager log classic..$i | git shortlog; done"
+	gerritcleanup1 = "!for i in $( git for-each-ref --format='%(refname)' refs/heads/OZLAU* ); do echo \"branch: $i\"; git ll classic..$i ; done"
+
+	#File listings
+	ls-ignored = ls-files --exclude-standard --ignored --others
+
+	#logs
+	l = log --no-merges
+	lc = log ORIG_HEAD.. --stat --no-merges
+	ll = log --pretty=nice --abbrev-commit --date=relative
+	lg1 = log --graph --all  --pretty=nice --abbrev-commit --date=relative
+	lg2 = log --graph --all --abbrev-commit --pretty=longnice
+	lg = !"git lg1"
+	lself = !git l --author=kenm
+	slog = !git log ...classic | git shortlog
+
+	#more logs
+	rawlog = log --format=\"format:commit %H%nAuthor:%an%n%n%B%n\"
+	justpushed = log origin/classic@{\"1 days ago\"}..origin/classic
+
+	#Find bugs
+	findbug = "!sh -c 'git log --grep='^[[:space:]]*OZLAU[-_]$1'' -"
+	bugrelease = "!sh -c 'git name-rev --tags --name-only  $(git log --grep='^[[:space:]]*OZLAU[-_]$1' --pretty=\"format:%H\n\")' -"
+	
+	######GREP STUFF
+	#grep with special stuff
+	g = grep --break --heading --line-number
+	
+	#search index
+	gi = !git g --cached
+	gdi = diff-index --cached
+	glf = log -G
+	gl = "!sh -c 'git log --grep='$1' --format=nice $2' -"
+	gl1 = "!sh -c 'git log --grep='$1' --oneline $2' -"
+
+	#What branch contains a following sha1.
+	contains = branch --contains
+	this = rev-parse --abbrev-ref HEAD
+	cloneurl = config --get remote.origin.url
+
+	#What is the upstream branch?
+	upstream = rev-parse --symbolic-full-name --abbrev-ref HEAD@{upstream}
+
+	authors = !"git l --format='%aN <%aE>' HEAD | sort -u"
+
+	alias = !"git config --list | grep alias"
+
+	#Show stash
+	lstash = !"for i in $(git --no-pager stash list --format=\"%gd\"); do echo \"List stash: $i\"; git stash show $i; done"
+	sstash = !"for i in $(git --no-pager stash list --format=\"%gd\"); do echo \"List stash: $i\"; git --no-pager stash show -p $i; done"
+	
+	[grep]
+		#Make git grep play nice
+		extendRegexp = true
+		lineNumber = true
+	
+	[pretty]
+		nice = format:%C(blue)%h %C(green)(%ar) %C(bold black)%an - %C(reset)%s%C(yellow)%+d%C(reset)
+		longnice = format:%C(blue)%h %C(cyan)%ad %C(green)%ar %C(bold black)%an%C(reset)%C(yellow)%+d%n%C(reset)%s
