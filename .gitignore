@@ -1,0 +1,43 @@
+id_rsa.pub
+
+## Mac Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## Thumbnails
+._*
+
+## Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+## Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+## JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+.idea/
+/*.iml
+*.ipr
+*.iws
+atlassian-ide-plugin.xml
+
+## Text Mate
+*.tmproj
+*.tmproject
+tmtags
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
